@@ -1,2 +1,3 @@
 # AzureLearning
-Small Projects as I learn Azure
+Small Projects and experiements to enable me to kick the tyres of new Azure features.
+
