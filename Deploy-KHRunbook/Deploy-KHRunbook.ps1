@@ -1,9 +1,10 @@
-#Temp Variable Decalaration
-$Name = ''
-$RGName = ''
-$automationAcctName = ''
-
-Function Publish-NDAzureRunbook {
+Function Publish-KHAzureRunbook {
+    
+    # DONE Check whether runbook already exists
+    # DONE Create new runbook if it doesn't exist
+    # DONE import runbook code to new runbook if blank
+    # DONE Import runbook code to new runbook if -force switch is used
+    # output success or failure status
 
     [CmdletBinding()]
     Param(
@@ -39,11 +40,7 @@ Function Publish-NDAzureRunbook {
         $Force
     )
 
-    # DONE Check whether runbook already exists
-    # DONE Create new runbook if it doesn't exist
-    # DONE import runbook code to new runbook if blank
-    # DONE Import runbook code to new runbook if -force switch is used
-    # output success or failure status
+
     $RBExists = $null
 
     $Params = @{
@@ -53,8 +50,8 @@ Function Publish-NDAzureRunbook {
     }
 
 
-    $RBExists = Test-NDAzureRunbook @Params
-    write-verbose "Runbook Already Exists?: $RBExists"
+    $RBExists = Test-KHAzureRunbook @Params
+    write-verbose "Testing whether runbook already exists."
 
     If ($RBExists) {
 
@@ -66,6 +63,7 @@ Function Publish-NDAzureRunbook {
                 $params += @{
                     type = 'PowerShell'
                     path = $Path
+                    force = $true
                 }
                 
                 Import-AzureRmAutomationRunbook @params
@@ -92,7 +90,7 @@ Function Publish-NDAzureRunbook {
     }
 }
 
-Function Test-NDAzureRunbook {
+Function Test-KHAzureRunbook {
     #Verifies whether a given Azure Runbook exists
 
     [CmdletBinding()]
@@ -127,13 +125,4 @@ Function Test-NDAzureRunbook {
         Write-Verbose "Runbook Not Found: $name"
         Return $False
     }
-}
-
-
-Function Import-NDAzureRunbook {
-
-    
-
-    $params += @{type = 'PowerShell'}
-    Import-AzureRmAutomationRunbook @params
 }
